@@ -5,19 +5,30 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.*;
 import java.io.Serializable;
 
-import javax.persistence.*;
-        import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Table(name = "cloud")
 public class Cloud implements Serializable {
 
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idCloud;
+    @Column(name = "brand",length = 45)
     private String brand;
+    @Column(name = "name",length = 250)
     private String name;
+    @Column(name = "year")
     private Integer year;
+    @Column(name = "decription",length = 250)
     private String description;
     private Integer categoria;
 
@@ -25,6 +36,14 @@ public class Cloud implements Serializable {
     @JoinColumn(name= "categoryId")
     @JsonIgnoreProperties("cloud")
     private Category category;
+
+    @OneToMany(cascade = {CascadeType.PERSIST},mappedBy = "cloud")
+    @JsonIgnoreProperties("cloud")
+    public List<Message> messages;
+
+    @OneToMany(cascade = {CascadeType.PERSIST},mappedBy = "cloud")
+    @JsonIgnoreProperties("cloud")
+    public List <Reservation> reservations;
     public Integer getIdCloud() {
         return idCloud;
     }

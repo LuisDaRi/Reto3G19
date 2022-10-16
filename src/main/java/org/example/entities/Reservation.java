@@ -18,14 +18,30 @@ public class Reservation implements Serializable {
     private Date fechafin;
     private String status = "created";
     private Integer nube;
+    @ManyToOne
+    @JoinColumn(name = "idCloud")
+    @JsonIgnoreProperties("reservation")
+    public Category cloud;
+
+    @OneToOne
+    @JsonIgnoreProperties("reservation")
+    public Score score;
 
     @ManyToOne
-    @JoinColumn(name = "categoryId")
     @JsonIgnoreProperties("reservation")
-    private Category category;
+    public Category category;
+//
+//    @ManyToOne
+//    @JsonIgnoreProperties("reservation")
+//    public Message message ;
+
+    @ManyToOne
+    @JoinColumn(name = "idCliente")
+    @JsonIgnoreProperties("reservation")
+    public Client client;
 
     public Integer getIdReservation() {
-        return idReservation;
+    return idReservation;
     }
 
     public void setIdReservation(Integer idReservation) {
@@ -56,6 +72,22 @@ public class Reservation implements Serializable {
         this.fechafin = fechafin;
     }
 
+    public Category getCloud() {
+        return cloud;
+    }
+
+    public void setCloud(Category cloud) {
+        this.cloud = cloud;
+    }
+
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
+    }
+
     public String getStatus() {
         return status;
     }
@@ -72,13 +104,7 @@ public class Reservation implements Serializable {
         this.nube = nube;
     }
 
-    public Category getCategory() {
-        return category;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
-    }
-}
 
 
